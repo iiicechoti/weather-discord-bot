@@ -76,9 +76,9 @@ def make_embed(data):
     """สร้าง embed สำหรับ Discord"""
     city = data["name"]
     icon = data["weather"]["icon"]
-    emoji = EMOJIS.get(icon, "🌡️")
-    color = COLORS.get(icon[:2], 0x2ECC71)
-    desc = data["weather"]["description"]
+emoji = EMOJIS.get(icon, "🌡️")
+color = COLORS.get(icon[:2], 0x2ECC71)
+desc = data["weather"]["description"]
 
     temp = data["main"]["temp"]
     feels = data["main"]["feels_like"]
