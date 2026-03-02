@@ -1,0 +1,42 @@
+# .github/workflows/weather.yml
+
+name: Weather Report
+
+on:
+  # ⏰ ตั้งเวลารายงานอัตโนมัติ
+  schedule:
+    # รายงานทุกชั่วโมง
+    # นาทีที่ 0 ของทุกชั่วโมง
+    - cron: '0 * * * *'
+
+    # 💡 อยากเปลี่ยนเวลา?
+    # ทุก 3 ชั่วโมง:        '0 */3 * * *'
+    # วันละ 3 รอบ (6,12,18 โมงไทย = 23,5,11 UTC):
+    #                        '0 23,5,11 * * *'
+    # วันละครั้ง 7 โมงเช้าไทย (= 0:00 UTC):
+    #                        '0 0 * * *'
+
+  # ✋ กดรันด้วยมือได้
+  workflow_dispatch:
+
+jobs:
+  send-weather:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ดึงโค้ด
+        uses: actions/checkout@v4
+
+      - name: ติดตั้ง Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: ติดตั้ง packages
+        run: pip install -r requirements.txt
+
+      - name: ส่งรายงานสภาพอากาศ
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+        run: python bot.py current
