@@ -11,10 +11,9 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install requests
-      - run: |
-          curl -o bot.py "https://gist.githubusercontent.com/iiicechoti/821d414359835c4fe9668fa1741a161a/raw/31cd0265f26cb2cabbb212d85fdab2de48e71dca/bot.py"
-          cat bot.py
-          python bot.py
+      - run: curl -o bot.py "https://gist.githubusercontent.com/iiicechoti/821d414359835c4fe9668fa1741a161a/raw/bot.py"
+      - run: head -20 bot.py
+      - run: python bot.py
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
